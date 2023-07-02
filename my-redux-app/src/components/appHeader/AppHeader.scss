@@ -1,0 +1,25 @@
+nav{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    background-color: #595959;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-shadow: rgb(0, 0, 0, 0.35) 0px 5px 15px;
+    a{
+        text-decoration: none;
+        font-size: 25px;
+        color:#ffff;
+    }
+    a:hover{
+        color:#dbdbdb;
+    }
+    .active:hover{
+        color: rgb(12, 164, 215);
+    }
+}
+
+.active {
+    color:rgb(101, 213, 250);
+}
