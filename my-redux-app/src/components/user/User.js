@@ -1,18 +1,21 @@
-import DefaultAvatar from '../../resources/img/Default-ava.png'
 import './User.scss'
 
-export const User = ({avatar, name, message, theme}) => {
+export const User = ({ avatar, name, message, theme, onDelete }) => {
     return (
-        <div className="container">
-            <ul>
                 <li className='user'>
-                    <img className='avatar' src={DefaultAvatar} alt="" />
+                    <ul>
+                        <li>
+                            <img className='avatar' src={avatar} alt="" />
+                            <h2>{name}</h2>
+                        </li>
+                    </ul>
                     <div className="desc">
-                        <h2>Theme:</h2>
-                        <p>Message:</p>
+                        <h2>Theme:{theme}</h2>
+                        <p className='message'>Message: {message}</p>
                     </div>
+                        <span onClick={onDelete} className="position-absolute translate-middle badge border rounded-pill bg-light">
+                        <button type="button" className="btn-close btn-close" aria-label="Close"></button>
+                    </span>
                 </li>
-            </ul>
-        </div>
     )
 };

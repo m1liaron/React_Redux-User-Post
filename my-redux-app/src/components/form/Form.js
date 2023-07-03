@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage, useField } from 'formik';
 import * as Yup from 'yup';
 import DefaultAvatar from '../../resources/img/Default-ava.png'
+import { useCreateUsersMutation } from '../../api/apiSlice'
+import { v4 as uuidv4 } from 'uuid';
 
 import './Form.scss'
 
@@ -66,7 +68,21 @@ const MyAvatarInput = ({ setAvatar }) => {
 };
 
 const CustomForm = () => {
-  const [avatar, setAvatar] = useState('');
+  const [createUsers] = useCreateUsersMutation();
+
+  const handleSubmit = (values) => {
+    // Handle form submission here
+    console.log(JSON.stringify(values, null, 2));
+    
+    const newUser = {
+      id: uuidv4(),
+      avatar: values.avatar,
+      name: values.name,
+      description: values.post,
+    };
+
+    createUsers(newUser).unwrap();
+  };
 
   return (
     <Formik
@@ -81,31 +97,50 @@ const CustomForm = () => {
         post: Yup.string().min(20, 'Minimum 20 symbols').required('Mandatory field'),
         theme: Yup.string().min(2, 'Minimum 2 symbols').required('Mandatory field')
       })}
-      onSubmit={(values) => console.log(JSON.stringify(values, null, 2))}
+      onSubmit={handleSubmit}
     >
-      <Form className="form">
-        <MyAvatarInput id='avatar' name='avatar' setAvatar={setAvatar} />
-        <MyTextInput
-          label="Name"
-          className="form-control"
-          placeholder="Write name"
-          id="name"
-          name="name"
-          type="text"
-        />
-        <label htmlFor="text">Your message</label>
-        <Field className="form-control" id="post" name="post" as="textarea" />
-        <ErrorMessage className="error" name="post" component="div" />
-        <MyTextInput
-          label="Theme"
-          className="form-control"
-          placeholder="Write theme"
-          id="theme"
-          name="theme"
-          type="text"
-        />
-        <button className="btn btn-primary">Submit</button>
-      </Form>
+      {({ values, handleChange, handleSubmit, isSubmitting }) => (
+        <Form className="form" onSubmit={handleSubmit}>
+          <MyAvatarInput
+            id='avatar'
+            name='avatar'
+            setAvatar={handleChange}
+          />
+          <MyTextInput
+            label="Name"
+            className="form-control"
+            placeholder="Write name"
+            id="name"
+            name="name"
+            type="text"
+            value={values.name}
+            onChange={handleChange}
+          />
+          <label htmlFor="text">Your message</label>
+          <Field
+            className="form-control"
+            id="post"
+            name="post"
+            as="textarea"
+            value={values.post}
+            onChange={handleChange}
+          />
+          <ErrorMessage className="error" name="post" component="div" />
+          <MyTextInput
+            label="Theme"
+            className="form-control"
+            placeholder="Write theme"
+            id="theme"
+            name="theme"
+            type="text"
+            value={values.theme}
+            onChange={handleChange}
+          />
+          <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };
