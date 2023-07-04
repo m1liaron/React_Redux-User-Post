@@ -9,12 +9,12 @@ export const UserList = () => {
         <div className="container">
             <ul>
                 {
-                    user && 
+                    user.length != 0 ? 
                     user.map(item => {
                         return (
                             <User name={item.name} avatar={item.avatar} theme={item.theme} message={item.message} />                                
                         )
-                    })
+                    }) : <h2>No users yet</h2>
                 }
             </ul>
         </div>
