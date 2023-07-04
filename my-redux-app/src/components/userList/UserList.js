@@ -1,34 +1,23 @@
-import { useGetUsersQuery, useDeleteUserMutation } from '../../api/apiSlice';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { User } from '../user/User';
 import './UserList.scss'
+import { useEffect } from 'react';
 
 export const UserList = () => {
-    
-    const {
-        data: users = [],
-    } = useGetUsersQuery();
+    const user = useSelector(state => state.contacts.contacts);
 
-    const [deleteUser] = useDeleteUserMutation;
-
-    const onDelete = ((id) => {
-        deleteUser(id)
-    }, []);
-
-    const renderUsersList = (arr) => {
-        if (arr.length === 0) {
-            <h5>Not users yet</h5>
-        }
-
-        return arr.map(({id, ...props}) => {
-            <User {...props} onDelete={() => onDelete(id)} />
-        })
-    }
-
-    const elements = renderUsersList(users);
     return (
         <div className="container">
             <ul>
-                    {elements}
+                {
+                    user && 
+                    user.map(item => {
+                        return (
+                            <User name={item.name} avatar={item.avatar} theme={item.theme} message={item.message} />                                
+                        )
+                    })
+                }
             </ul>
         </div>
     )
