@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import users from '../components/user/userSlice';
+import users from '../components/userList/userListSlice';
 import { apiSlice } from '../api/apiSlice';
 
 const stringMiddleware = () => (next) => (action) => {
