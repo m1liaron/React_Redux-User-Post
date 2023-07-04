@@ -1,6 +1,5 @@
 .user {
     max-width: 600px;
-    max-height: 200px;
     background-color: #ededed;
     border-radius: 10px;
     margin: 0 auto;
@@ -8,15 +7,29 @@
     align-items: center;
     gap: 20px;
     padding: 10px;
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+    }
+
     .avatar {
         max-width: 100px;
-        border-radius:10px;
+        max-height: 70px;
+        border-radius: 10px;
         margin-bottom: 5px;
     }
-    .desc{
-        border:1px solid #0000;
+
+    .desc {
+        border: 1px solid #0000;
+        margin-left: 50px;
+
+        h2 {
+            font-size: 15px;
+        }
+
         .message {
-            background-color:#0000;
+            background-color: #0000;
         }
     }
 }
